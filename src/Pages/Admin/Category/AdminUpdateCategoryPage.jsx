@@ -1,14 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createCategory, getCategory } from "../../../Redux/ActionCreator/CategoryActionCreators"
+import { updateCategory, getCategory } from "../../../Redux/ActionCreator/CategoryActionCreators"
 
 import AdminSlidebar from '../../../Component/Admin/AdminSlidebar'
 import ImageValidators from '../../../FormValidators/ImageValidators'
 import TextValidators from '../../../FormValidators/TextValidators'
 
-export default function AdminCreateCategoryPage() {
+export default function AdminUpdateCategoryPage() {
+  let { id } = useParams()
+
   let navigate = useNavigate()
   let dispatch = useDispatch()
 
@@ -18,8 +20,8 @@ export default function AdminCreateCategoryPage() {
     status: true,
   })
   let [errorMessage, setErrorMessage] = useState({
-    name: 'Name field is Mendatory',
-    pic: 'Pic field is Mendatory',
+    name: '',
+    pic: '',
   })
   let [show, setShow] = useState(false)
 
@@ -46,7 +48,7 @@ export default function AdminCreateCategoryPage() {
       setShow(true)
     else {
       // let item = CategoryStateData.find(x => x.name?.toLocaleLowerCase() === data.name?.toLocaleLowerCase())
-      let item = CategoryStateData.find(x => x.name?.toLocaleLowerCase() === data.name?.toLocaleLowerCase())
+      let item = CategoryStateData.find(x => x.id !== id && x.name?.toLocaleLowerCase() === data.name?.toLocaleLowerCase())
       if (item) {
         setShow(true)
         setErrorMessage({ ...errorMessage, name: "Category With This Name Is Alredy Exist" })
@@ -58,15 +60,22 @@ export default function AdminCreateCategoryPage() {
       // formData.append("name",data.name)
       // formData.append("name",data.pic)
       // formData.append("name",data.status)
-      // dispatch(createCategory(formData))
+      // dispatch(updateCategory(formData))
 
-      dispatch(createCategory({ ...data }))
+      dispatch(updateCategory({ ...data }))
       navigate("/admin/category")
     }
 
   }
   useEffect(() => {
     dispatch(getCategory())
+    if (CategoryStateData.length) {
+      let item = CategoryStateData.find(x => x.id === id)
+      if (item)
+        setData({ ...data, ...item })
+      else
+        navigate("/admin/category")
+    }
   }, [CategoryStateData.length])
 
   return (
@@ -76,12 +85,12 @@ export default function AdminCreateCategoryPage() {
           <AdminSlidebar />
         </div>
         <div className="col-md-9  fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-          <h5 className='bg-primary p-2 text-light text-center rounded-top fs-4'>Create Category <Link to="/admin/category"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
+          <h5 className='bg-primary p-2 text-light text-center rounded-top fs-4'>Update Category <Link to="/admin/category"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
           <form onSubmit={postData}>
             <div className="row">
               <div className="col-12 mb-3">
                 <label>Name*</label>
-                <input type="text" name="name" placeholder='Category Name' onChange={getInputData} className={`form-control ${show && errorMessage.name ? 'border-danger' : 'border-dark'}`} />
+                <input type="text" name="name" value={data.name} placeholder='Category Name' onChange={getInputData} className={`form-control ${show && errorMessage.name ? 'border-danger' : 'border-dark'}`} />
                 {show && errorMessage.name ? <p className='text-danger text-capitalized'>{errorMessage.name}</p> : null}
               </div>
 
@@ -93,13 +102,13 @@ export default function AdminCreateCategoryPage() {
 
               <div className="col-md-6 mb-3">
                 <label>Status*</label>
-                <select name="status" onChange={getInputData} className={`form-select border-dark`}>
+                <select name="status" value={data.status ? "1" : "0"} onChange={getInputData} className={`form-select border-dark`}>
                   <option value="1">Active</option>
                   <option value="0">Inactive</option>
                 </select>
               </div>
               <div className="col-12 mb-3">
-                <button type='submit' className='btn btn-primary w-100'>Create</button>
+                <button type='submit' className='btn btn-primary w-100'>Update</button>
               </div>
             </div>
           </form>
