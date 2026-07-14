@@ -1,12 +1,12 @@
 import { all } from "redux-saga/effects"
-import CategorySaga from "./CategorySagas"
-import BrandSaga from "./BrandSagas"
+
+import FaqSaga from "./FaqSagas"
 import CarSaga from "./CarSagas"
+import BrandSaga from "./BrandSagas"
 import ServiceSaga from "./ServiceSagas"
 import FeatureSaga from "./FeatureSagas"
-import FaqSaga from "./FaqSagas"
 import SettingSaga from "./SettingSagas"
-
+import CategorySaga from "./CategorySagas"
 
 export default function* RootSaga(){
     yield all([
