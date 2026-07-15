@@ -1,12 +1,13 @@
 import useSetting from "../Hooks/useSetting"
 
 export default function Feature() {
-    const settingData =useSetting()
+    const settingData = useSetting()
+    
     return (
         <>
             <div className="container-fluid feature py-5">
                 <div className="container py-5">
-                    <div className="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "800px"}}>
+                    <div className="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style={{ maxWidth: "800px" }}>
                         <h1 className="display-5 text-capitalize mb-3">{settingData.siteName} <span className="text-primary">Features</span></h1>
                         <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                         </p>
@@ -39,7 +40,7 @@ export default function Feature() {
                             </div>
                         </div>
                         <div className="col-lg-12 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="img/features-img.png" className="img-fluid w-100" style={{objectFit: "cover"}} alt="Img"/>
+                            <img src="img/features-img.png" className="img-fluid w-100" style={{ objectFit: "cover" }} alt="Img" />
                         </div>
                         <div className="col-xl-4">
                             <div className="row gy-4 gx-0">
