@@ -1,11 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getSetting, createSetting, updateSetting } from '../../../Redux/ActionCreator/SettingActionCreators'
+
+import RichTextEditor from '../../../rte/RichTextEditor'
+import { createStructuredContent, renderHTML } from '../../../rte/richTextEditorBridge'
 
 import AdminSlidebar from '../../../Component/Admin/AdminSlidebar'
 import { Bounce, toast, ToastContainer } from 'react-toastify'
 
 export default function AdminSettingPage() {
+  let editorRefPrivacyPolicy = useRef(null)
+  let editorRefDataPolicy = useRef(null)
+
+  let [privacyPolicy, setPrivacyPolicy] = useState("")
+  let [dataPolicy, setDataPolicy] = useState("")
+
   let [data, setData] = useState({
     siteName: "",
     map1: "",
@@ -25,6 +34,22 @@ export default function AdminSettingPage() {
   let SettingStateData = useSelector(state => state.SettingStateData)
   let dispatch = useDispatch()
 
+  function changePrivacyPolicy(documentModel, nextHtml) {
+    setPrivacyPolicy(nextHtml !== undefined ? nextHtml : renderHTML(documentModel))
+  }
+
+  function changeDataPolicy(documentModel, nextHtml) {
+    setDataPolicy(nextHtml !== undefined ? nextHtml : renderHTML(documentModel))
+  }
+
+  function handelChangePrivacyPolicy(nextHtml, editor) {
+    changePrivacyPolicy(editor.getJSON(), nextHtml);
+  }
+
+  function handelChangeDataPolicy(nextHtml, editor) {
+    changeDataPolicy(editor.getJSON(), nextHtml);
+  }
+
   function getInputData(e) {
     let { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -32,7 +57,7 @@ export default function AdminSettingPage() {
 
   function postData(e) {
     e.preventDefault()
-    let item = { ...data }
+    let item = { ...data, privacyPolicy: privacyPolicy, dataPolicy: dataPolicy }
     if (SettingStateData.length)
       dispatch(updateSetting(item))
     else
@@ -41,13 +66,19 @@ export default function AdminSettingPage() {
   }
 
   useEffect(() => {
-    let time = (() => {
+    (() => {
       dispatch(getSetting())
       if (SettingStateData.length) {
         setData({ ...data, ...SettingStateData[0] })
+        setTimeout(() => {
+          const documentModel1 = createStructuredContent(SettingStateData[0].privacyPolicy ?? "")
+          const documentModel2 = createStructuredContent(SettingStateData[0].dataPolicy ?? "")
+          changePrivacyPolicy(documentModel1, SettingStateData[0].privacyPolicy ?? "")
+          changeDataPolicy(documentModel2, SettingStateData[0].dataPolicy ?? "")
+        })
       }
     })()
-    return () => clearTimeout(time)
+    // return () => clearTimeout(time)
   }, [SettingStateData.length])
 
   return (
@@ -68,7 +99,7 @@ export default function AdminSettingPage() {
 
               {/* ===== Basic Info ===== */}
               <div className="card shadow-sm p-3 mb-3 rounded-4">
-                <h6 className="fw-bold mb-3 text-primary">
+                <h6 className="fw-bold mb-3 text-dark">
                   Basic Information
                 </h6>
                 <div className="row g-3">
@@ -76,7 +107,7 @@ export default function AdminSettingPage() {
                     <label className="ps-2">Site Name</label>
                     <div className="input-group mb-2 border border-primary rounded">
                       <span className="input-group-text">
-                        <i className="bi bi-globe2 text-primary"></i>
+                        <i className="bi bi-globe2 text-success"></i>
                       </span>
 
                       <input
@@ -109,6 +140,23 @@ export default function AdminSettingPage() {
                   </div>
 
                   <div className="col-md-6">
+                    <label className="ps-2">WhatsApp</label>
+                    <div className="input-group mb-2 border border-primary rounded">
+                      <span className="input-group-text">
+                        <i className="bi bi-whatsapp text-success"></i>
+                      </span>
+                      <input
+                        type="text"
+                        name="whatsapp"
+                        value={data.whatsapp}
+                        onChange={getInputData}
+                        className="form-control"
+                        placeholder="WhatsApp Number"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
                     <label className="ps-2">Phone</label>
                     <div className="input-group mb-2 border border-primary rounded">
                       <span className="input-group-text">
@@ -126,22 +174,6 @@ export default function AdminSettingPage() {
                     </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <label className="ps-2">WhatsApp</label>
-                    <div className="input-group mb-2 border border-primary rounded">
-                      <span className="input-group-text">
-                        <i className="bi bi-whatsapp text-primary"></i>
-                      </span>
-                      <input
-                        type="text"
-                        name="whatsapp"
-                        value={data.whatsapp}
-                        onChange={getInputData}
-                        className="form-control"
-                        placeholder="WhatsApp Number"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -284,6 +316,27 @@ export default function AdminSettingPage() {
                   />
                 </div>
               </div>
+
+              <div className="col-12 mb-3">
+                <lable>Privacy Policy</lable>
+                <RichTextEditor
+                  ref={editorRefPrivacyPolicy}
+                  onChange={handelChangePrivacyPolicy}
+                  className="bordeer border-primary"
+                  value={privacyPolicy}
+                />
+              </div>
+
+              <div className="col-12 mb-3">
+                <lable>Data Policy</lable>
+                <RichTextEditor
+                  ref={editorRefDataPolicy}
+                  onChange={handelChangeDataPolicy}
+                  className="bordeer border-primary"
+                  value={dataPolicy}
+                />
+              </div>
+
               {/* <div className="card shadow-sm p-3 mt-3 mb-3 rounded-4">
                 <h6 className="fw-bold mb-3 text-primary">
                   Basic Information
