@@ -28,8 +28,8 @@ export default function AdminSettingPage() {
     linkedin: "",
     youtube: "",
     instagram: "",
-    // privacyPolicy: "",
-    // termsAndConditions: "",
+    privacyPolicy: "",
+    dataPolicy: ""
   })
   let SettingStateData = useSelector(state => state.SettingStateData)
   let dispatch = useDispatch()
@@ -58,6 +58,7 @@ export default function AdminSettingPage() {
   function postData(e) {
     e.preventDefault()
     let item = { ...data, privacyPolicy: privacyPolicy, dataPolicy: dataPolicy }
+    console.log(item)
     if (SettingStateData.length)
       dispatch(updateSetting(item))
     else
