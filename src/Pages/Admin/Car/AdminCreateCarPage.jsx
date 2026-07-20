@@ -16,7 +16,7 @@ export default function AdminCreateCarPage() {
 
   let [data, setData] = useState({
     name: '',
-    type: 'CNG',
+    type: 'Petrol',
     seatingCapacity: '5',
     registrationNumber: '',
     drivingMode: 'Manual',
@@ -77,8 +77,16 @@ export default function AdminCreateCarPage() {
       // formData.append("name",data.pic)
       // formData.append("name",data.status)
       // dispatch(createCar(formData))
+      let bs = parseInt(data.baseRentAmount)
+      let d = parseInt(data.discount)
+      let fs = bs - bs * d / 100
+      dispatch(createCar({
+        ...data,
+        baseRentAmount: bs,
+        discount: d,
+        finalRentAmount: fs
 
-      dispatch(createCar({ ...data }))
+      }))
       navigate("/admin/car")
     }
   }
@@ -118,7 +126,7 @@ export default function AdminCreateCarPage() {
                 <label>Category*</label>
                 <select name='category' onChange={getInputData} className='form-select border-dark'>
                   {CategoryStateData.filter(x => x.status).map((item) => {
-                    return <option key={item.id}>{item.name}</option>
+                    return <option value={item.name} key={item.id}>{item.name}</option>
                   })}
                 </select>
               </div>
@@ -127,7 +135,7 @@ export default function AdminCreateCarPage() {
                 <label>Brand*</label>
                 <select name='brand' onChange={getInputData} className='form-select border-dark'>
                   {BrandStateData.filter(x => x.status).map((item) => {
-                    return <option key={item.id}>{item.name}</option>
+                    return <option value={item.name} key={item.id}>{item.name}</option>
                   })}
                 </select>
               </div>
@@ -146,8 +154,8 @@ export default function AdminCreateCarPage() {
 
               <div className="col-xl-3 col-md-6 mb-3">
                 <label>Driving Mode*</label>
-                <select name='driver' onChange={getInputData} className='form-select border-primary'>
-                  <option>Manual</option>
+                <select name='drivingMode' onChange={getInputData} className='form-select border-primary'>
+                  <option selected>Manual</option>
                   <option>Automatic</option>
                 </select>
               </div>
@@ -155,7 +163,7 @@ export default function AdminCreateCarPage() {
               <div className="col-xl-3 col-md-6 mb-3">
                 <label>Driver Requered*</label>
                 <select name='driver' onChange={getInputData} className='form-select border-primary'>
-                  <option value="0">No</option>
+                  <option selected value="0">No</option>
                   <option value="1">Yes</option>
                 </select>
               </div>
@@ -175,7 +183,7 @@ export default function AdminCreateCarPage() {
                 <label>Type*</label>
                 <select name='type' onChange={getInputData} className='form-select border-primary'>
                   <option>CNG</option>
-                  <option>Petrol</option>
+                  <option selected >Petrol</option>
                   <option>EV</option>
                   <option>Petrol + Hybrid</option>
                   <option>Diesel</option>
@@ -202,11 +210,11 @@ export default function AdminCreateCarPage() {
                   <option value="0">Inactive</option>
                 </select>
               </div>
-              
+
               <div className="col-12 mb-3">
                 <button type='submit' className='btn btn-primary w-100'>Create</button>
               </div>
-              
+
             </div>
           </form>
         </div>

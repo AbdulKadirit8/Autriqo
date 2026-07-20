@@ -238,7 +238,7 @@ export default function AdminSettingPage() {
                 </div>
               </div>
 
-              {/* ===== Social Media ===== */}
+              {/* Social Media */}
               <div className="card shadow-sm p-3 mt-3 mb-3 rounded-4">
                 <h6 className="fw-bold mb-3">Social Media Profiles</h6>
 
