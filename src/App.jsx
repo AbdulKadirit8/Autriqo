@@ -35,7 +35,7 @@ import AdminUpdateServicePage from './Pages/Admin/Service/AdminUpdateServicePage
 import AdminFaqPage from './Pages/Admin/Faq/AdminFaqPage'
 import AdminCreateFaqPage from './Pages/Admin/Faq/AdminCreateFaqPage'
 import AdminUpdateFaqPage from './Pages/Admin/Faq/AdminUpdateFaqPage'
-import AdminSettingPage from './Pages/Admin/Setting/AdminFaqPage'
+import AdminSettingPage from './Pages/Admin/Setting/AdminSettingPage'
 import AdminCarPage from './Pages/Admin/Car/AdminCarPage'
 import AdminCreateCarPage from './Pages/Admin/Car/AdminCreateCarPage'
 import AdminUpdateCarPage from './Pages/Admin/Car/AdminUpdateCarPage'

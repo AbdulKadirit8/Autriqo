@@ -311,6 +311,7 @@ export default function AdminSettingPage() {
                     type="url"
                     name="linkedin"
                     value={data.linkedin}
+                    // value={privacyPolicy}
                     onChange={getInputData}
                     className="form-control"
                     placeholder="Linkedin profile page URL"
@@ -338,23 +339,8 @@ export default function AdminSettingPage() {
                 />
               </div>
 
-              {/* <div className="card shadow-sm p-3 mt-3 mb-3 rounded-4">
-                <h6 className="fw-bold mb-3 text-primary">
-                  Basic Information
-                </h6>
+              <button type="submit" className="btn btn-primary fs-5 text-light text-center p-2 rounded w-100">Submit</button>
 
-                <label className="ps-2">Privacy Policy</label>
-                <div className="border border-primary rounded">
-                  <div ref={refdivPrivacyPolicy}></div>
-                </div>
-
-                <label className="ps-2 pt-3">Terms And Conditions</label>
-                <div className="mb-3 border border-primary rounded">
-                  <div ref={refdivTermsAndConditions}></div>
-                </div>
-                <button className="btn btn-primary w-100">Submit</button>
-              </div> */}
-              <button type="submit" className="bg-primary border-primary fs-5 text-light text-center p-2 rounded w-100">Submit</button>
             </div>
           </form>
           <ToastContainer
