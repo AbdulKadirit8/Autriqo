@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
+
+import { Bounce, toast, ToastContainer } from 'react-toastify'
+import { createStructuredContent, renderHTML } from '../../../rte/richTextEditorBridge'
+import RichTextEditor from '../../../rte/RichTextEditor'
+
 import { setShowSlider } from '../../../Redux/Reducer/SliderReducer'
 import { useEffect, useState, useRef } from 'react'
 import { getSetting, createSetting, updateSetting } from '../../../Redux/ActionCreator/SettingActionCreators'
 
-import RichTextEditor from '../../../rte/RichTextEditor'
-import { createStructuredContent, renderHTML } from '../../../rte/richTextEditorBridge'
-
 import AdminSlidebar from '../../../Component/Admin/AdminSlidebar'
-import { Bounce, toast, ToastContainer } from 'react-toastify'
 
 export default function AdminSettingPage() {
   const showSlider = useSelector(
@@ -90,7 +91,7 @@ export default function AdminSettingPage() {
     <div className='container-fluid my-3'>
       <div className="row">
 
-        <div className={`${showSlider ? 'd-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+        <div className={`${showSlider ? 'd-md-none' : ''} col-md-2 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
 
@@ -98,7 +99,8 @@ export default function AdminSettingPage() {
           <form onSubmit={postData}>
             <div className="container-fluid">
               {/* Header */}
-              <h4 className="bg-primary text-light text-center p-2 rounded"><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3`} onClick={() => setShowSlider(!showSlider)}></i>
+              <h4 className="bg-primary text-light text-center p-2 rounded"><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3 d-none d-md-inline`} onClick={() => dispatch(setShowSlider(!showSlider))}></i>
+              {console.log(showSlider)}
                 Setting
               </h4>
 

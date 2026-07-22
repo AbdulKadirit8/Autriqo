@@ -4,3 +4,30 @@ color: rgb(234, 0, 30);
 .text-logo-e{
     color: rgb(31, 46, 78);
 }
+
+ /* Main menu  for admin profile */
+.mobile-menu{
+    background: #f5f5f5;
+    color: black;
+    transition: 0.9s;
+}
+
+.mobile-active{
+    background: #0d6efd;
+    color: white;
+    transform: translateY(-7px);
+    transition: 0.3s;
+    box-shadow: inset 4px 10px 4px rgba(0, 0, 0, 0.3);
+}
+.mobile-active{
+    transform: translateY(-7px);
+    transition: 0.9s;
+}
+.mobile-scroll{
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.mobile-scroll::-webkit-scrollbar{
+    display: none;
+}

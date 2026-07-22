@@ -31,7 +31,7 @@ export default function AdminCreateCarPage() {
     baseRentAmount: 0,
     discount: 0,
     finalRentAmount: 0,
-    city: '',
+    address: '',
     pic: [],
     status: true,
   })
@@ -40,7 +40,7 @@ export default function AdminCreateCarPage() {
     registrationNumber: 'Registration Number field is Mendatory',
     baseRentAmount: 'Base Rent Amount field is Mendatory',
     discount: 'Discount field is Mendatory',
-    city: 'City field is Mendatory',
+    address: 'Address field is Mendatory',
     pic: 'Pic field is Mendatory',
   })
   let [show, setShow] = useState(false)
@@ -62,12 +62,19 @@ export default function AdminCreateCarPage() {
   }
 
 
-  function postData(e) {
+  async function postData(e) {
     e.preventDefault()
     let error = Object.values(errorMessage).find(x => x !== '')
     if (error)
       setShow(true)
     else {
+      let response = await fetch(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=jsonv2&limit=1`)
+      response = await response.json()
+      if (response.length === 0) {
+        setErrorMessage({ ...errorMessage, address: 'Invalid Address, PLease Enter Correct Address' })
+        setShow(true)
+        return
+      }
       // let item = CarStateData.find(x => x.name?.toLocaleLowerCase() === data.name?.toLocaleLowerCase())
       // let item = CarStateData.find(x => x.name?.toLocaleLowerCase() === data.name?.toLocaleLowerCase())
       // if (item) {
@@ -89,7 +96,11 @@ export default function AdminCreateCarPage() {
       // formData.append("baseRentAmount",data.baseRentAmount)
       // formData.append("discount",data.discount)
       // formData.append("finalRentAmount",data.finalRentAmount)
-      // formData.append("city",data.city)
+      // formData.append("address", {
+      //   address: data.address,
+      //   lat: response[0].lat,
+      //   lon: response[0].lon
+      // })
       // Array.from(data.pic).forEach(x=>{
       // formData.append("pic", x)
       // })
@@ -98,15 +109,19 @@ export default function AdminCreateCarPage() {
 
       let bs = parseInt(data.baseRentAmount)
       let d = parseInt(data.discount)
-      let fs = bs - bs * d / 100
+      let fs = parseInt(bs - bs * d / 100)
       dispatch(createCar({
         ...data,
         category: data.category || CategoryStateData[0].name,
         brand: data.brand || BrandStateData[0].name,
         baseRentAmount: bs,
         discount: d,
-        finalRentAmount: fs
-
+        finalRentAmount: fs,
+        address: {
+          address: data.address,
+          lat: response[0].lat,
+          lon: response[0].lon
+        }
       }))
       navigate("/admin/car")
     }
@@ -123,11 +138,11 @@ export default function AdminCreateCarPage() {
   return (
     <div className='container-fluid my-3'>
       <div className="row">
-        <div className={`${showSlider ? 'd-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+        <div className={`${showSlider ? 'd-md-none' : ''} col-md-2 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
         <div className={`${showSlider ? 'col-12' : 'col-md-9'}  fadeInRight animated`} data-animation="fadeInRight" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
-          <h5 className='bg-primary p-2 fs-4 text-light text-center rounded-top'><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3`} onClick={() => dispatch(setShowSlider(!showSlider))}></i>Create Car <Link to="/admin/car"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
+          <h5 className='bg-primary p-2 fs-4 text-light text-center rounded-top'><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3 d-none d-md-inline`} onClick={() => dispatch(setShowSlider(!showSlider))}></i>Create Car <Link to="/admin/car"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
           <form onSubmit={postData}>
             <div className="row">
 
@@ -214,9 +229,9 @@ export default function AdminCreateCarPage() {
               </div>
 
               <div className="col-md-6 mb-3">
-                <label>City*</label>
-                <input type="text" name="city" placeholder='Basic Amount Per Day' onChange={getInputData} className={`form-control ${show && errorMessage.city ? 'border-danger' : 'border-dark'}`} />
-                {show && errorMessage.city ? <p className='text-danger text-capitalized'>{errorMessage.city}</p> : null}
+                <label>Address*</label>
+                <input type="text" name="address" placeholder='Address' onChange={getInputData} className={`form-control ${show && errorMessage.address ? 'border-danger' : 'border-dark'}`} />
+                {show && errorMessage.address ? <p className='text-danger text-capitalized'>{errorMessage.address}</p> : null}
               </div>
 
               <div className="col-md-6 mb-3">
