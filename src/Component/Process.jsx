@@ -5,7 +5,7 @@ export default function Process() {
     const settingData=useSetting()
     return (
         <div className="container-fluid steps py-5">
-            <div className="container py-5">
+            <div className="container-fluid py-5">
                 <div className="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "800px"}}>
                     <h1 className="display-5 text-capitalize text-white mb-3">{settingData.siteName}<span className="text-primary"> Process</span></h1>
                     <p className="mb-0 text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,

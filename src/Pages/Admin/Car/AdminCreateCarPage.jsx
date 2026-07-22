@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { setShowSlider } from '../../../Redux/Reducer/SliderReducer'
 
 import { createCar } from "../../../Redux/ActionCreator/CarActionCreators"
 import { getBrand } from "../../../Redux/ActionCreator/BrandActionCreators"
@@ -11,6 +12,10 @@ import ImageValidators from '../../../FormValidators/ImageValidators'
 import TextValidators from '../../../FormValidators/TextValidators'
 
 export default function AdminCreateCarPage() {
+  const showSlider = useSelector(
+    state => state.slider.showSlider
+  );
+
   let navigate = useNavigate()
   let dispatch = useDispatch()
 
@@ -74,14 +79,30 @@ export default function AdminCreateCarPage() {
       // backend
       // let formData= new FormData()
       // formData.append("name",data.name)
-      // formData.append("name",data.pic)
-      // formData.append("name",data.status)
+      // formData.append("type",data.type)
+      // formData.append("seatingCapacity",data.seatingCapacity)
+      // formData.append("registrationNumber",data.registrationNumber)
+      // formData.append("drivingMode",data.drivingMode)
+      // formData.append("driver",data.driver)
+      // formData.append("category",data.category||CategoryStateData[0].id)
+      // formData.append("brand",data.brand||BrandStateData[0].id)
+      // formData.append("baseRentAmount",data.baseRentAmount)
+      // formData.append("discount",data.discount)
+      // formData.append("finalRentAmount",data.finalRentAmount)
+      // formData.append("city",data.city)
+      // Array.from(data.pic).forEach(x=>{
+      // formData.append("pic", x)
+      // })
+      // formData.append("status",data.status)
       // dispatch(createCar(formData))
+
       let bs = parseInt(data.baseRentAmount)
       let d = parseInt(data.discount)
       let fs = bs - bs * d / 100
       dispatch(createCar({
         ...data,
+        category: data.category || CategoryStateData[0].name,
+        brand: data.brand || BrandStateData[0].name,
         baseRentAmount: bs,
         discount: d,
         finalRentAmount: fs
@@ -100,23 +121,23 @@ export default function AdminCreateCarPage() {
   }, [BrandStateData.length])
 
   return (
-    <div className='container my-3'>
+    <div className='container-fluid my-3'>
       <div className="row">
-        <div className="col-md-3  fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
+        <div className={`${showSlider ? 'd-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
-        <div className="col-md-9  fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-          <h5 className='bg-primary p-2 text-light text-center rounded-top fs-4'>Create Car <Link to="/admin/car"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
+        <div className={`${showSlider ? 'col-12' : 'col-md-9'}  fadeInRight animated`} data-animation="fadeInRight" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+          <h5 className='bg-primary p-2 fs-4 text-light text-center rounded-top'><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3`} onClick={() => dispatch(setShowSlider(!showSlider))}></i>Create Car <Link to="/admin/car"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
           <form onSubmit={postData}>
             <div className="row">
 
-              <div className="col-xl-9 col-md-6 mb-3">
+              <div className="col-md-6 mb-3">
                 <label>Name*</label>
                 <input type="text" name="name" placeholder='Car Name' onChange={getInputData} className={`form-control ${show && errorMessage.name ? 'border-danger' : 'border-dark'}`} />
                 {show && errorMessage.name ? <p className='text-danger text-capitalized'>{errorMessage.name}</p> : null}
               </div>
 
-              <div className="col-xl-3 col-md-6 mb-3">
+              <div className="col-md-6 mb-3">
                 <label>Registration Number*</label>
                 <input type="text" name="registrationNumber" placeholder='Registration Number' onChange={getInputData} className={`form-control ${show && errorMessage.registrationNumber ? 'border-danger' : 'border-dark'}`} />
                 {show && errorMessage.registrationNumber ? <p className='text-danger text-capitalized'>{errorMessage.registrationNumber}</p> : null}
@@ -127,6 +148,7 @@ export default function AdminCreateCarPage() {
                 <select name='category' onChange={getInputData} className='form-select border-dark'>
                   {CategoryStateData.filter(x => x.status).map((item) => {
                     return <option value={item.name} key={item.id}>{item.name}</option>
+                    // return <option value={item.name} key={item.id} value={item.id}>{item.name}</option>
                   })}
                 </select>
               </div>
@@ -136,6 +158,7 @@ export default function AdminCreateCarPage() {
                 <select name='brand' onChange={getInputData} className='form-select border-dark'>
                   {BrandStateData.filter(x => x.status).map((item) => {
                     return <option value={item.name} key={item.id}>{item.name}</option>
+                    // return <option value={item.name} key={item.id} value={item.id}>{item.name}</option>
                   })}
                 </select>
               </div>
@@ -190,25 +213,24 @@ export default function AdminCreateCarPage() {
                 </select>
               </div>
 
-              <div className="col-xl-4  col-md-6 mb-3">
-                <label>Pic*</label>
-                <input type="file" name="pic" onChange={getInputData} className={`form-control ${show && errorMessage.pic ? 'border-danger' : 'border-dark'}`} />
-                {show && errorMessage.pic ? <p className='text-danger text-capitalized'>{errorMessage.pic}</p> : null}
-              </div>
-
-              <div className="col-xl-4  col-md-6 mb-3">
+              <div className="col-md-6 mb-3">
                 <label>City*</label>
                 <input type="text" name="city" placeholder='Basic Amount Per Day' onChange={getInputData} className={`form-control ${show && errorMessage.city ? 'border-danger' : 'border-dark'}`} />
                 {show && errorMessage.city ? <p className='text-danger text-capitalized'>{errorMessage.city}</p> : null}
               </div>
 
-
-              <div className="col-xl-4  col-md-6 mb-3">
+              <div className="col-md-6 mb-3">
                 <label>Status*</label>
                 <select name="status" onChange={getInputData} className={`form-select border-dark`}>
                   <option value="1">Active</option>
                   <option value="0">Inactive</option>
                 </select>
+              </div>
+
+              <div className="col-12 mb-3">
+                <label>Pic*</label>
+                <input type="file" name="pic" multiple onChange={getInputData} className={`form-control ${show && errorMessage.pic ? 'border-danger' : 'border-dark'}`} />
+                {show && errorMessage.pic ? <p className='text-danger text-capitalized'>{errorMessage.pic}</p> : null}
               </div>
 
               <div className="col-12 mb-3">

@@ -5,7 +5,7 @@ export default function ContactUsPage() {
         <>
             <Breadcrum title={"Contact Us"} />
             <div className="container-fluid contact py-5">
-                <div className="container py-5">
+                <div className="container-fluid py-5">
                     <div className="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "800px"}}>
                         <h1 className="display-5 text-capitalize text-primary mb-3">Contact Us</h1>
                         <p className="mb-0">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a className="text-primary fw-bold" href="https://htmlcodex.com/contact-form">Download Now</a>.</p>

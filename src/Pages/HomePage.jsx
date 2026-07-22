@@ -22,7 +22,7 @@ export default function HomePage() {
                         <div className="carousel-item active">
                             <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="First slide" />
                             <div className="carousel-caption">
-                                <div className="container py-4">
+                                <div className="container-fluid py-4">
                                     <div className="row g-5">
                                         <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
                                             <div className="bg-secondary rounded p-5">
@@ -43,7 +43,7 @@ export default function HomePage() {
                         <div className="carousel-item">
                             <img src="img/carousel-1.jpg" className="img-fluid w-100" alt="First slide" />
                             <div className="carousel-caption">
-                                <div className="container py-4">
+                                <div className="container-fluid py-4">
                                     <div className="row g-5">
                                         <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
                                             <div className="bg-secondary rounded p-5">

@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { setShowSlider } from '../../../Redux/Reducer/SliderReducer'
 
 import { updateService, getService } from "../../../Redux/ActionCreator/ServiceActionCreators"
 
@@ -8,6 +9,9 @@ import AdminSlidebar from '../../../Component/Admin/AdminSlidebar'
 import TextValidators from '../../../FormValidators/TextValidators'
 
 export default function AdminUpdateServicePage() {
+  const showSlider = useSelector(
+    state => state.slider.showSlider
+  );
   let { id } = useParams()
 
   let navigate = useNavigate()
@@ -65,13 +69,13 @@ export default function AdminUpdateServicePage() {
   }, [ServiceStateData.length])
 
   return (
-    <div className='container my-3'>
+    <div className='container-fluid my-3'>
       <div className="row">
-        <div className="col-md-3  fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
+        <div className={`${showSlider ? 'd-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
-        <div className="col-md-9  fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-          <h5 className='bg-primary p-2 text-light text-center rounded-top fs-4'>Update Service`` <Link to="/admin/service"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
+        <div className={`${showSlider ? 'col-12' : 'col-md-9'}  fadeInRight animated`} data-animation="fadeInRight" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+          <h5 className='bg-primary p-2 fs-4 text-light text-center rounded-top'><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3`} onClick={() => dispatch(setShowSlider(!showSlider))}></i>Update Service`` <Link to="/admin/service"><i className='bi bi-arrow-left text-light float-end fs-3'></i></Link></h5>
           <form onSubmit={postData}>
             <div className="row">
               <div className="col-12 mb-3">

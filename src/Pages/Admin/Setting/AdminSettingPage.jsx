@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { setShowSlider } from '../../../Redux/Reducer/SliderReducer'
 import { useEffect, useState, useRef } from 'react'
 import { getSetting, createSetting, updateSetting } from '../../../Redux/ActionCreator/SettingActionCreators'
 
@@ -9,6 +10,9 @@ import AdminSlidebar from '../../../Component/Admin/AdminSlidebar'
 import { Bounce, toast, ToastContainer } from 'react-toastify'
 
 export default function AdminSettingPage() {
+  const showSlider = useSelector(
+    state => state.slider.showSlider
+  );
   let editorRefPrivacyPolicy = useRef(null)
   let editorRefDataPolicy = useRef(null)
 
@@ -83,18 +87,18 @@ export default function AdminSettingPage() {
   }, [SettingStateData.length])
 
   return (
-    <div className='container my-3'>
+    <div className='container-fluid my-3'>
       <div className="row">
 
-        <div className="col-md-3  fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
+        <div className={`${showSlider ? 'd-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
 
-        <div className="col-md-9  fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
+        <div className={`${showSlider ? 'col-12' : 'col-md-9'}  fadeInRight animated`} data-animation="fadeInRight" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <form onSubmit={postData}>
             <div className="container-fluid">
               {/* Header */}
-              <h4 className="bg-primary text-light text-center p-2 rounded">
+              <h4 className="bg-primary text-light text-center p-2 rounded"><i className={`bi ${showSlider ? 'bi-list' : 'bi-x-circle'} float-start fs-3`} onClick={() => setShowSlider(!showSlider)}></i>
                 Setting
               </h4>
 

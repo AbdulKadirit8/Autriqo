@@ -5,7 +5,7 @@ export default function Navbar() {
     return (
         <>
             <div className="container-fluid topbar bg-secondary w-100">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row gx-0 align-items-center" style={{ height: 45 }}>
                         <div className="col-lg-10 col-6 text-center text-lg-start mb-lg-0">
                             <div className="d-flex flex-wrap">
@@ -27,7 +27,7 @@ export default function Navbar() {
                 </div>
             </div>
             <div className="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
-                <div className="container">
+                <div className="container-fluid">
                     <nav className="navbar navbar-expand-lg navbar-light">
                         <Link to="" className="navbar-brand p-0">
                             <h1 className="display-6 text-logo-e"><img src="/public/images/logoicon.png" style={{ maxWidth: 140 }} className="pb-2 pe-2" alt="Logo Icon" /></h1>

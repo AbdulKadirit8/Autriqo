@@ -1,7 +1,7 @@
 export default function Banner() {
     return (
         <div className="container-fluid banner pb-5 wow zoomInDown" data-wow-delay="0.1s">
-            <div className="container py-5">
+            <div className="container-fluid py-5">
                 <div className="banner-item rounded">
                     <img src="img/banner-1.jpg" className="img-fluid rounded w-100" alt=""/>
                         <div className="banner-content">

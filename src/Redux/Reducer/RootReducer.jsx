@@ -1,4 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
+import SliderReducer from "./SliderReducer";
+
 import CategoryReducer from "./CategoryReducer";
 import BrandReducer from "./BrandReducer";
 import CarReducer from "./CarReducer";
@@ -15,4 +17,5 @@ export default combineReducers({
     ServiceStateData:ServiceReducer,
     FaqStateData:FaqReducer,
     SettingStateData:SettingReducer,
+    slider: SliderReducer
 })

@@ -6,7 +6,7 @@ export default function About() {
         <>
             {/* <Breadcrum PageName={"About"}/> */}
             <div className="container-fluid overflow-hidden about py-5">
-                <div className="container py-5">
+                <div className="container-fluid py-5">
                     <div className="row g-5">
                         <div className="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
                             <div className="about-item">
