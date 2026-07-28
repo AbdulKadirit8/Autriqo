@@ -81,7 +81,7 @@ export default function AdminSettingPage() {
           const documentModel2 = createStructuredContent(SettingStateData[0].dataPolicy ?? "")
           changePrivacyPolicy(documentModel1, SettingStateData[0].privacyPolicy ?? "")
           changeDataPolicy(documentModel2, SettingStateData[0].dataPolicy ?? "")
-        })
+        }, 500)
       }
     })()
     // return () => clearTimeout(time)
@@ -91,7 +91,7 @@ export default function AdminSettingPage() {
     <div className='container-fluid my-3'>
       <div className="row">
 
-        <div className={`${showSlider ? 'd-md-none' : ''} col-md-2 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+        <div className={`${showSlider ? 'd-md-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
 

@@ -24,18 +24,7 @@ export default function AdminBrandPage() {
       setData(data.filter(x => x.id !== id))
     }
   }
-  //   let time = (() => {
-  //     dispatch(getBrand())
-  //     if (BrandStateData.length) {
-  //       let item = BrandStateData.find(x => x.id === id)
-  //       if (item) {
-  //         setData({ ...data, ...item })
-  //         return setTimeout(() => new DataTable('#myTable'), 500)
-  //       }
-  //     }
-  //   })()
-  //   return () => clearTimeout(time)
-  // }, [BrandStateData.length])
+
   useEffect(() => {
     let time = (() => {
       dispatch(getBrand())
@@ -51,7 +40,7 @@ export default function AdminBrandPage() {
     <div className='container-fluid my-3'>
       <div className="row">
 
-        <div className={`${showSlider ? 'd-md-none' : ''} col-md-2 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+        <div className={`${showSlider ? 'd-md-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
 

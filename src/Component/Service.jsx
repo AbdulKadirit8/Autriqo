@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux"
 import useSetting from "../Hooks/useSetting"
 
 export default function Service() {
     const settingData = useSetting()
+    let ServiceStateData=useSelector(state=>state.ServiceStateData)
+
     return (
         <div className="container-fluid service py-5">
             <div className="container-fluid py-5">
@@ -11,60 +14,18 @@ export default function Service() {
                     </p>
                 </div>
                 <div className="row g-4">
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    {ServiceStateData.filter(x=>x.status).map((item)=>{
+                        return <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" key={item.id}>
                         <div className="service-item p-4">
                             <div className="service-icon mb-4">
-                                <i className="fa fa-phone-alt fa-2x"></i>
+                                <span className="fs-1 text-light" dangerouslySetInnerHTML={{__html:item.icon}} />
                             </div>
-                            <h5 className="mb-3">Phone Reservation</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
+                            <h5 className="mb-3">{item.name}</h5>
+                            <p className="mb-0">{item.shortDescription}</p>
                         </div>
                     </div>
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <i className="fa fa-money-bill-alt fa-2x"></i>
-                            </div>
-                            <h5 className="mb-3">Special Rates</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <i className="fa fa-road fa-2x"></i>
-                            </div>
-                            <h5 className="mb-3">One Way Rental</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <i className="fa fa-umbrella fa-2x"></i>
-                            </div>
-                            <h5 className="mb-3">Life Insurance</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <i className="fa fa-building fa-2x"></i>
-                            </div>
-                            <h5 className="mb-3">City to City</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <i className="fa fa-car-alt fa-2x"></i>
-                            </div>
-                            <h5 className="mb-3">Free Rides</h5>
-                            <p className="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p>
-                        </div>
-                    </div>
+                    })}
+                    
                 </div>
             </div>
         </div>

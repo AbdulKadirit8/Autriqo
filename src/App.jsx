@@ -39,6 +39,7 @@ import AdminSettingPage from './Pages/Admin/Setting/AdminSettingPage'
 import AdminCarPage from './Pages/Admin/Car/AdminCarPage'
 import AdminCreateCarPage from './Pages/Admin/Car/AdminCreateCarPage'
 import AdminUpdateCarPage from './Pages/Admin/Car/AdminUpdateCarPage'
+import FaqPage from './Pages/FaqPage'
 
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/service' element={<ServicePage />} />
         <Route path='/feature' element={<FeaturesPage />} />
+        <Route path='/faq' element={<FaqPage />} />
         <Route path='/car' element={<CarPage />} />
         <Route path='/car/:id' element={<CarDetailsPage />} />
         <Route path='/testimonial' element={<TestimonialPage />} />

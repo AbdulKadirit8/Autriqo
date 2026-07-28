@@ -37,7 +37,7 @@ export default function Navbar() {
                         <button className="navbar-toggler" onClick={() => setShowMenu(!showMenu)} type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                             <span className="fa fa-bars"></span>
                         </button>
-                        <div  className={`collapse navbar-collapse ${showMenu ? "show" : ""}`} id="navbarCollapse">
+                        <div className={`collapse navbar-collapse ${showMenu ? "show" : ""}`} id="navbarCollapse">
                             <div className="navbar-nav mx-auto py-0">
                                 <NavLink onClick={() => setShowMenu(false)} to="/" className="nav-item nav-link ">Home</NavLink>
                                 <NavLink onClick={() => setShowMenu(false)} to="/admin" className="nav-item nav-link ">Admin</NavLink>

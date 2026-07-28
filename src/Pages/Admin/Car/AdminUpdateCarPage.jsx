@@ -12,7 +12,7 @@ import ImageValidators from '../../../FormValidators/ImageValidators'
 import TextValidators from '../../../FormValidators/TextValidators'
 
 export default function AdminUpdateCarPage() {
-
+  let [showWaitButton, setShowWaitButton] = useState(false)
   const showSlider = useSelector(
     state => state.slider.showSlider
   );
@@ -77,6 +77,7 @@ export default function AdminUpdateCarPage() {
       setErrorMessage({ ...errorMessage, pic: "Please Upload Atleas One Image" })
     }
     else {
+      setShowWaitButton(true)
       let response = await fetch(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=jsonv2&limit=1`)
       response = await response.json()
       if (response.length === 0) {
@@ -151,7 +152,7 @@ export default function AdminUpdateCarPage() {
   return (
     <div className='container-fluid my-3'>
       <div className="row">
-        <div className={`${showSlider ? 'd-md-none' : ''} col-md-2 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
+        <div className={`${showSlider ? 'd-md-none' : ''} col-md-3 fadeInLeft animated`} data-animation="fadeInLeft" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
           <AdminSlidebar />
         </div>
         <div className={`${showSlider ? 'col-12' : 'col-md-9'}  fadeInRight animated`} data-animation="fadeInRight" data-delay="0.1s" style={{ animationDelay: "0.1s" }}>
@@ -274,7 +275,7 @@ export default function AdminUpdateCarPage() {
               </div>
 
               <div className="col-12 mb-3">
-                <button type='submit' className='btn btn-primary w-100'>Update</button>
+                <button type='submit' className='btn btn-primary w-100'>{showWaitButton?'Please wait...':'Update'}</button>
               </div>
 
             </div>

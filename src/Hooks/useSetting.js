@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getSetting } from "../Redux/ActionCreator/SettingActionCreators";
 
 export default function useSetting() {
+  let SettingStateData=useSelector(state=>state.SettingStateData)
+  let dispatch =useDispatch()
   let [settingData, setSettingData] = useState({
     siteName: import.meta.env.VITE_APP_SITENAME,
     logoIcon: import.meta.env.VITE_APP_LOGOICON,
@@ -16,5 +21,24 @@ export default function useSetting() {
     linkedin: import.meta.env.VITE_APP_LINKEDIN,
     youtube: import.meta.env.VITE_APP_YOUTUBE,
   });
+  useEffect(() => {
+    (() => {
+      dispatch(getSetting())
+
+      if (SettingStateData.length) {
+        let data = []
+        Object.keys(settingData).forEach((x => {
+          data.push([
+            x,
+            SettingStateData[0][x]
+              ? SettingStateData[0][x]
+              : settingData[x]
+          ])
+        }))
+        setSettingData(Object.fromEntries(data))
+      }
+    })()
+  }, [SettingStateData.length])
   return settingData;
 }
+
