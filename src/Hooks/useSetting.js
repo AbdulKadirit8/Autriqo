@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSetting } from "../Redux/ActionCreator/SettingActionCreators";
 
 export default function useSetting() {
-  let SettingStateData=useSelector(state=>state.SettingStateData)
-  let dispatch =useDispatch()
+  let SettingStateData = useSelector((state) => state.SettingStateData);
+  let dispatch = useDispatch();
   let [settingData, setSettingData] = useState({
     siteName: import.meta.env.VITE_APP_SITENAME,
     logoIcon: import.meta.env.VITE_APP_LOGOICON,
@@ -14,7 +14,8 @@ export default function useSetting() {
     email: import.meta.env.VITE_APP_EMAIL,
     address: import.meta.env.VITE_APP_ADDRESS,
     map1: import.meta.env.VITE_APP_MAP1,
-
+    privacyPolicy: import.meta.env.VITE_APP_PRIVACYPOLICY,
+    dataPolicy: import.meta.env.VITE_APP_DATAPOLICY,
     facebook: import.meta.env.VITE_APP_FACEBOOK,
     instagram: import.meta.env.VITE_APP_INSTAGRAM,
     twitter: import.meta.env.VITE_APP_TWITTER,
@@ -23,22 +24,19 @@ export default function useSetting() {
   });
   useEffect(() => {
     (() => {
-      dispatch(getSetting())
+      dispatch(getSetting());
 
       if (SettingStateData.length) {
-        let data = []
-        Object.keys(settingData).forEach((x => {
+        let data = [];
+        Object.keys(settingData).forEach((x) => {
           data.push([
             x,
-            SettingStateData[0][x]
-              ? SettingStateData[0][x]
-              : settingData[x]
-          ])
-        }))
-        setSettingData(Object.fromEntries(data))
+            SettingStateData[0][x] ? SettingStateData[0][x] : settingData[x],
+          ]);
+        });
+        setSettingData(Object.fromEntries(data));
       }
-    })()
-  }, [SettingStateData.length])
+    })();
+  }, [SettingStateData.length]);
   return settingData;
 }
-

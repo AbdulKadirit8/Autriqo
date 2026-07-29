@@ -40,11 +40,13 @@ import AdminCarPage from './Pages/Admin/Car/AdminCarPage'
 import AdminCreateCarPage from './Pages/Admin/Car/AdminCreateCarPage'
 import AdminUpdateCarPage from './Pages/Admin/Car/AdminUpdateCarPage'
 import FaqPage from './Pages/FaqPage'
+import ScrollToTop from './Component/ScrollToTop'
 
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />

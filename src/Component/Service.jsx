@@ -1,10 +1,15 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import useSetting from "../Hooks/useSetting"
+import { useEffect } from "react"
+import { getService } from "../Redux/ActionCreator/ServiceActionCreators"
 
 export default function Service() {
     const settingData = useSetting()
-    let ServiceStateData=useSelector(state=>state.ServiceStateData)
-
+    let ServiceStateData = useSelector(state => state.ServiceStateData)
+    let dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getService())
+    })
     return (
         <div className="container-fluid service py-5">
             <div className="container-fluid py-5">
@@ -14,18 +19,18 @@ export default function Service() {
                     </p>
                 </div>
                 <div className="row g-4">
-                    {ServiceStateData.filter(x=>x.status).map((item)=>{
+                    {ServiceStateData.filter(x => x.status).map((item) => {
                         return <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" key={item.id}>
-                        <div className="service-item p-4">
-                            <div className="service-icon mb-4">
-                                <span className="fs-1 text-light" dangerouslySetInnerHTML={{__html:item.icon}} />
+                            <div className="service-item p-4">
+                                <div className="service-icon mb-4">
+                                    <span className="fs-1 text-light" dangerouslySetInnerHTML={{ __html: item.icon }} />
+                                </div>
+                                <h5 className="mb-3">{item.name}</h5>
+                                <p className="mb-0">{item.shortDescription}</p>
                             </div>
-                            <h5 className="mb-3">{item.name}</h5>
-                            <p className="mb-0">{item.shortDescription}</p>
                         </div>
-                    </div>
                     })}
-                    
+
                 </div>
             </div>
         </div>
