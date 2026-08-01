@@ -31,3 +31,47 @@ color: rgb(234, 0, 30);
 .mobile-scroll::-webkit-scrollbar{
     display: none;
 }
+
+
+.categories-item {
+    perspective: 1200px;
+}
+
+.categories-item-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    will-change: transform;
+    cursor: pointer;
+    border-radius: 18px;
+}
+
+.categories-item-inner:hover {
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.25),
+        0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.categories-img {
+    overflow: hidden;
+    border-radius: 18px 18px 0 0;
+}
+
+.categories-img img {
+    transition: transform 0.4s ease;
+}
+
+.categories-item-inner:hover .categories-img img {
+    transform: scale(1.08) translateZ(20px);
+}
+
+.categories-content {
+    transform: translateZ(25px);
+}
+
+.categories-item-inner .btn {
+    transition: all .3s ease;
+}
+
+.categories-item-inner:hover .btn {
+    transform: translateZ(30px);
+}

@@ -1,15 +1,17 @@
+import { Link } from "react-router-dom";
 import AboutPage from "../Component/About";
 import Banner from "../Component/Banner";
 import CarSlider from "../Component/CarSlider";
-import EnquiryFrom from "../Component/EnquiryFrom";
 import Feature from "../Component/Feature";
 import Process from "../Component/Process";
 import Service from "../Component/Service";
 import States from "../Component/States";
 import Testimonial from "../Component/Testimonial";
+import Cars from "../Component/Cars";
+import About from "../Component/About";
 
 export default function HomePage() {
-    
+
     return (
         <>
             <div className="header-carousel">
@@ -22,19 +24,13 @@ export default function HomePage() {
                         <div className="carousel-item active">
                             <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="First slide" />
                             <div className="carousel-caption">
-                                <div className="container-fluid py-4">
+                                <div className="container py-4">
                                     <div className="row g-5">
-                                        <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-                                            <div className="bg-secondary rounded p-5">
-                                                <h4 className="text-white mb-4">CONTINUE CAR RESERVATION</h4>
-                                                <EnquiryFrom />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 d-none d-lg-flex fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-                                            <div className="text-start">
-                                                <h1 className="display-5 text-white">Get 15% off your rental Plan your trip now</h1>
-                                                <p>Treat yourself in USA</p>
-                                            </div>
+                                        <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style={{ animationDelay: "1s" }}>
+                                            <h1 className='display-5 text-white'>Drive Your Journey with Confidence</h1>
+                                            <h5 className='text-white'>Reliable Cars • Affordable Prices • Hassle-Free Rentals</h5>
+                                            <p className='text-white'>Explore every destination with RentDrive's premium car rental services. Choose from a wide range of well-maintained vehicles, enjoy flexible rental plans, transparent pricing, and exceptional customer support for a safe and comfortable travel experience.</p>
+                                            <Link to="/car" className='btn btn-primary btn-lg'>Explore Our Latest Cars</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -43,19 +39,13 @@ export default function HomePage() {
                         <div className="carousel-item">
                             <img src="img/carousel-1.jpg" className="img-fluid w-100" alt="First slide" />
                             <div className="carousel-caption">
-                                <div className="container-fluid py-4">
+                                <div className="container py-4">
                                     <div className="row g-5">
-                                        <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-                                            <div className="bg-secondary rounded p-5">
-                                                <h4 className="text-white mb-4">CONTINUE CAR RESERVATION</h4>
-                                                <EnquiryFrom />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 d-none d-lg-flex fadeInRight animated" data-animation="fadeInRight" data-delay="0.5s" style={{ animationDelay: "0.5s" }}>
-                                            <div className="text-start">
-                                                <h1 className="display-5 text-white">Get 15% off your rental! Choose Your Model </h1>
-                                                <p>Treat yourself in USA</p>
-                                            </div>
+                                        <div className="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style={{ animationDelay: "1s" }}>
+                                            <h1 className='display-5 text-white'>Your Perfect Ride, Ready When You Are</h1>
+                                            <h5 className='text-white'>Book Fast • Travel Smart • Drive Happy</h5>
+                                            <p className='text-white'>Whether it's a business trip, family vacation, or weekend getaway, RentDrive provides dependable vehicles to suit every journey. Experience easy online booking, competitive rates, and reliable service that keeps you moving with confidence.</p>
+                                            <Link to="/car" className='btn btn-primary btn-lg'>Explore Our Latest Cars</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -64,13 +54,23 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
-            <Feature />
+            {/* <Feature />
             <AboutPage />
             <States />
             <Service />
             <CarSlider />
             <Process />
             <Banner />
+            <Testimonial /> */}
+            <Cars />
+            <Feature />
+            <About />
+            <States />
+            <Service />
+            <CarSlider />
+            <Process />
+            <Banner />
+            <Testimonial />
             <Testimonial />
         </>
     )

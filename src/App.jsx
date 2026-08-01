@@ -41,6 +41,7 @@ import AdminCreateCarPage from './Pages/Admin/Car/AdminCreateCarPage'
 import AdminUpdateCarPage from './Pages/Admin/Car/AdminUpdateCarPage'
 import FaqPage from './Pages/FaqPage'
 import ScrollToTop from './Component/ScrollToTop'
+import DataPolicyPage from './Pages/DataPolicyPage'
 
 
 export default function App() {
@@ -58,6 +59,7 @@ export default function App() {
         <Route path='/car/:id' element={<CarDetailsPage />} />
         <Route path='/testimonial' element={<TestimonialPage />} />
         <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
+        <Route path='/data-policy' element={<DataPolicyPage />} />
         <Route path='/tc' element={<TermAndConditionPage />} />
         <Route path='/contact' element={<ContactUsPage />} />
 
