@@ -3,7 +3,7 @@ export default function ImageValidators(e) {
         let pic = e.target.files[0]
         if (!["image/jpg", "image/avif", "image/jpeg", "image/png", "image/gif", "image/webp"].includes(pic.type))
             return 'Pic Is Not Valid .Please Upload An Image Of type .jpg, .avif, .jpeg, .png, .gif, .webp'
-        else if (pic.size > 1048576)
+        else if (pic.size > 8048576)
             return 'Pic Is To Heavy. PLease Upload An Image Upto 1 MB'
         else
             return ''

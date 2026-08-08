@@ -28,7 +28,7 @@ export default function CarCard({ item }) {
             "rotateX(0deg) rotateY(0deg) scale(1)";
     };
     return (
-        <div className="categories-item p-4">
+        <div className="categories-item border border-0 p-2">
             <div
                 className="categories-item-inner card"
                 onMouseMove={handleMouseMove}
@@ -38,7 +38,7 @@ export default function CarCard({ item }) {
                     <img src={`${import.meta.env.VITE_APP_IMAGE_SERVER}${item.pic[0]}`} className="img-fluid w-100 rounded-top" alt="" />
                 </div>
                 <div className="categories-content rounded-bottom p-4">
-                    <h5 className=''>{item.name}</h5>
+                    <h5 >{item.name}</h5>
                     <div className="mb-4">
                         <h6 className="bg-white text-primary rounded-pill py-2 mb-0"><del>&#8377;{item.baseRentAmount}</del> <span className='text-secondary'>&#8377;{item.finalRentAmount}/Day</span> <small><sup>{item.discount}% Off</sup></small></h6>
                     </div>
