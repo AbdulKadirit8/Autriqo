@@ -9,7 +9,7 @@ export default function Service() {
     let dispatch = useDispatch()
     useEffect(() => {
         dispatch(getService())
-    })
+    }, [ServiceStateData.length])
     return (
         <div className="container-fluid service py-5">
             <div className="container-fluid py-5">

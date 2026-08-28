@@ -14,6 +14,9 @@ export default function CarPage() {
     brand: []
   })
 
+  let [sortFilter, setSortFilter] = useState(0)
+  let [search, setSearch] = useState("")
+
   let CarStateData = useSelector(state => state.CarStateData)
   let CategoryStateData = useSelector(state => state.CategoryStateData)
   let BrandStateData = useSelector(state => state.BrandStateData)
@@ -26,6 +29,39 @@ export default function CarPage() {
       arr.push(value)
 
     setSelected({ ...selected, [key]: arr })
+    applyFilter({ ...selected, [key]: arr })
+  }
+
+
+  function applyFilter(selected) {
+    let data = CarStateData.filter(x => x.status && (
+      (selected.category?.length === 0 || selected.category.includes(x.category)) &&
+      (selected.brand?.length === 0 || selected.brand.includes(x.brand))
+    ))
+    applySortFilter(data, sortFilter)
+  }
+
+  function applySearchFilter() {
+    let data = CarStateData.filter(x => x.status && (
+      x.name?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+      x.category.includes(search) ||
+      x.brand.includes(search)
+    ))
+    applySortFilter(data, sortFilter)
+  }
+
+  function applySortFilter(data, sortFilter) {
+    if (sortFilter === "1")
+      data = data.sort((x, y) => y.id.localeCompare(x.id))
+    else if (sortFilter === "2")
+      data = data.sort((x, y) => x.finalRentAmount - y.finalRentAmount)
+    else if (sortFilter === "3")
+      data = data.sort((x, y) => y.finalRentAmount - x.finalRentAmount)
+    else
+      data = data.sort((x, y) => y.discount - x.discount)
+
+    setData(data)
+    setSortFilter(sortFilter)
   }
 
   useEffect(() => {
@@ -72,6 +108,28 @@ export default function CarPage() {
             </ul>
           </div>
           <div className="col-md-9">
+            <div className="row">
+
+              <div className="col-md-9">
+                <form onSubmit={(e) => {
+                  e.preventDefault()
+                  applySearchFilter()
+                }}>
+                  <div className="btn-group w-100">
+                    <input type="search" name="search" onChange={(e) => setSearch(e.target.value)} value={search} placeholder='Search Car By Name,Category or Brand' className='form-control rounded-0 rounded-start border-primary' />
+                    <button className='btn btn-primary' type='submit'>Search</button>
+                  </div>
+                </form>
+              </div>
+              <div className="col-md-3">
+                <select onChange={(e) => applySortFilter(data, e.target.value)} className='form-select border-primary'>
+                  <option value="1">Latest</option>
+                  <option value="2">Rent : Low to High</option>
+                  <option value="3">Rent : High to Low</option>
+                  <option value="4">More Discount</option>
+                </select>
+              </div>
+            </div>
             <div className="row">
               {data.map(item => {
                 return <div key={item.id} className='col-lg-4 col-md-6'>
