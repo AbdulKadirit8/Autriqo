@@ -42,6 +42,7 @@ import AdminUpdateCarPage from './Pages/Admin/Car/AdminUpdateCarPage'
 import FaqPage from './Pages/FaqPage'
 import ScrollToTop from './Component/ScrollToTop'
 import DataPolicyPage from './Pages/DataPolicyPage'
+import SignupPage from './Pages/User/SignupPage'
 
 
 export default function App() {
@@ -62,6 +63,9 @@ export default function App() {
         <Route path='/data-policy' element={<DataPolicyPage />} />
         <Route path='/tc' element={<TermAndConditionPage />} />
         <Route path='/contact' element={<ContactUsPage />} />
+
+        {/* USer Routes */}
+        <Route path='/signup' element={<SignupPage />} />
 
         {/* Admin routs */}
         <Route path='/admin' element={<AdminHomePge />} />

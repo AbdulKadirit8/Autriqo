@@ -5,6 +5,28 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCar } from '../Redux/ActionCreator/CarActionCreators'
 import CarSlider from '../Component/CarSlider'
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCube, Pagination } from 'swiper/modules'
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-cube';
+import 'swiper/css/pagination';
+
+const sliderOption = {
+  effect: 'cube',
+  grabCursor: true,
+  cubeEffect: {
+    shadow: true,
+    slideShadows: true,
+    shadowOffset: 20,
+    shadowScale: 0.94,
+  },
+  loop:true,
+  Pagination:true,
+  modules:[EffectCube, Pagination]
+}
 
 export default function CarDetailsPage() {
 
@@ -35,7 +57,19 @@ export default function CarDetailsPage() {
 
       <div className="container-fluid my-5">
         <div className="row mb-3">
-          <div className="col-md-6"></div>
+          <div className="col-md-6">
+            <Swiper 
+            {...sliderOption}
+            className='mySwiper'
+            >
+              {data.pic?.map((item,index)=>{
+                return <SwiperSlide key={index}>
+                  <img src={`${import.meta.env.VITE_APP_IMAGE_SERVER}${item}`}
+                  className='w-100' style={{height:400}} />
+                </SwiperSlide>
+              })}              
+            </Swiper>
+          </div>
           <div className="col-md-6">
             <h5 className='bg-primary p-2 text-light text-center rounded-top'>{data.name}</h5>
 
