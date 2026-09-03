@@ -12,7 +12,7 @@ schema
     .has().symbols(1)                                // Must have at least 1 special Character
     .has().not().spaces()                           // Should not have spaces
     .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
-1
+
 export default function TextValidators(e) {
     let { name, value } = e.target
     switch (name) {
