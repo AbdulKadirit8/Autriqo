@@ -2,6 +2,7 @@ import { useState } from "react";
 import Breadcrum from "../../Component/Breadcrum";
 import { useNavigate } from "react-router-dom";
 import TextValidators from "../../FormValidators/TextValidators";
+import { Link } from "react-router-dom";
 
 export default function SignupPage() {
 
@@ -125,6 +126,9 @@ export default function SignupPage() {
                             </div>
                         </div>
                     </form>
+                    <div>
+                        <Link to="/login">Already Have An Account? Login</Link>
+                    </div>
                 </div>
             </div>
         </>

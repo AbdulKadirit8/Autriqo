@@ -43,6 +43,8 @@ import FaqPage from './Pages/FaqPage'
 import ScrollToTop from './Component/ScrollToTop'
 import DataPolicyPage from './Pages/DataPolicyPage'
 import SignupPage from './Pages/User/SignupPage'
+import LoginPage from './Pages/User/LoginPage'
+import ProfilePage from './Pages/User/ProfilePage'
 
 
 export default function App() {
@@ -66,6 +68,9 @@ export default function App() {
 
         {/* USer Routes */}
         <Route path='/signup' element={<SignupPage />} />
+        <Route path='/login' element={<LoginPage />} />
+
+        <Route path='/profile' element={<ProfilePage />} />
 
         {/* Admin routs */}
         <Route path='/admin' element={<AdminHomePge />} />
