@@ -8,6 +8,11 @@ import FeatureReducer from "./FeatureReducer";
 import SettingReducer from "./SettingReducer";
 import ServiceReducer from "./ServiceReducer";
 import FaqReducer from "./FaqReducer";
+import UserReducer from "./UserReducer";
+import BookingReducer from "./BookingReducer";
+import NewsletterReducer from "./NewsletterReducer";
+import TestimonialReducer from "./TestimonialReducer";
+import ContactUsReducer from "./ContactUSReducer";
 
 export default combineReducers({
     CategoryStateData:CategoryReducer,
@@ -17,5 +22,10 @@ export default combineReducers({
     ServiceStateData:ServiceReducer,
     FaqStateData:FaqReducer,
     SettingStateData:SettingReducer,
+    UserStateData:UserReducer,
+    BookingStateData:BookingReducer,
+    NewsletterStateData:NewsletterReducer,
+    TestimonialStateData:TestimonialReducer,
+    ContactUsStateData:ContactUsReducer,
     slider: SliderReducer
 })

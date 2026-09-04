@@ -7,6 +7,11 @@ import ServiceSaga from "./ServiceSagas"
 import FeatureSaga from "./FeatureSagas"
 import SettingSaga from "./SettingSagas"
 import CategorySaga from "./CategorySagas"
+import UserSaga from "./UserSagas"
+import NewsletterSaga from "./NewsletterSagas"
+import ContactUsSaga from "./ContactUsSagas"
+import BookingSaga from "./BookingSagas"
+import TestimonialSaga from "./TestimonialSagas"
 
 export default function* RootSaga(){
     yield all([
@@ -17,5 +22,10 @@ export default function* RootSaga(){
         ServiceSaga(),
         FaqSaga(),
         SettingSaga(),
+        UserSaga(),
+        NewsletterSaga(),
+        ContactUsSaga(),
+        BookingSaga(),
+        TestimonialSaga(),
     ])
 }
