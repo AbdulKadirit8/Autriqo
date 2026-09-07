@@ -60,6 +60,9 @@ export default function CarCard({ item }) {
                             <span className="text-body text-start ms-1">{item.registrationNumber}</span>
                         </div>
                     </div>
+                    <div className='card  p-3 mb-3 text-center' style={{ height: 80 }}>
+                        {item.address?.address}
+                    </div>
                     <Link to={`/car/${item.id}`} className="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</Link>
                 </div>
             </div>

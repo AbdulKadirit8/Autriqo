@@ -1,9 +1,15 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import useSetting from "../Hooks/useSetting"
 import { useState } from "react"
 export default function Navbar() {
     let [showMenu, setShowMenu] = useState(false)
     const settingData = useSetting()
+    let navigate = useNavigate()
+
+    function logout() {
+        localStorage.clear
+        navigate("/login")
+    }
     return (
         <>
             <div className="container-fluid topbar bg-secondary w-100">
@@ -49,16 +55,22 @@ export default function Navbar() {
                                 <NavLink onClick={() => setShowMenu(false)} to="/testimonial" className="nav-item nav-link">Testimonial</NavLink>
                                 <NavLink onClick={() => setShowMenu(false)} to="/contact" className="nav-item nav-link">Contact</NavLink>
                             </div>
-                            <div className="nav-item dropdown">
-                                <Link to="#" className="nav-link dropdown-toggle btn btn-primary rounded-pill py-2 px-4 text-light" data-bs-toggle="dropdown">Abdul kadir</Link>
-                                <div className="dropdown-menu m-0">
 
-                                    <Link onClick={() => setShowMenu(false)} to="/profile" className="dropdown-item">Profile</Link>
-                                    <Link onClick={() => setShowMenu(false)} to="/admin" className="dropdown-item">Admin Dashboard</Link>
-                                    <Link onClick={() => setShowMenu(false)} to="/order" className="dropdown-item">Our Orders</Link>
-                                    <button className="dropdown-item">Logout</button>
-                                </div>
-                            </div>
+                            {localStorage.getItem("login") ?
+                                <>
+                                    <div className="nav-item dropdown">
+                                        <a href="#" className="nav-link dropdown-toggle btn btn-primary rounded-pill py-2 px-4 text-light" data-bs-toggle="dropdown">{localStorage.getItem("name")}</a>
+                                        <div className="dropdown-menu m-0">
+                                            <Link to="/profile?option=Profile" className="dropdown-item">Profile</Link>
+                                            {localStorage.getItem("role") !== "User" ? <Link to="/admin" className="dropdown-item">Admin Dashboard</Link> : null}
+                                            <Link to="/profile?option=Bookings" className="dropdown-item">Bookings</Link>
+                                            <Link to="/profile?option=Address" className="dropdown-item">Address</Link>
+                                            <button className="dropdown-item" onClick={logout}>Logout</button>
+                                        </div>
+                                    </div>
+                                </> :
+                                <NavLink to="/login" className="nav-item nav-link">Login</NavLink>
+                            }
                         </div>
                     </nav>
                 </div>
