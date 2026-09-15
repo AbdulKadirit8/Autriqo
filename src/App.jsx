@@ -45,6 +45,7 @@ import DataPolicyPage from './Pages/DataPolicyPage'
 import SignupPage from './Pages/User/SignupPage'
 import LoginPage from './Pages/User/LoginPage'
 import ProfilePage from './Pages/User/ProfilePage'
+import BookingConfirmationPage from './Pages/BookingConfirmationPage'
 
 
 
@@ -54,13 +55,14 @@ export default function App() {
       <ScrollToTop />
       <Navbar />
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<HomePage />} />1
         <Route path='/about' element={<AboutPage />} />
         <Route path='/service' element={<ServicePage />} />
         <Route path='/feature' element={<FeaturesPage />} />
         <Route path='/faq' element={<FaqPage />} />
         <Route path='/car' element={<CarPage />} />
         <Route path='/car/:id' element={<CarDetailsPage />} />
+        <Route path='/booking-confirmation' element={<BookingConfirmationPage />} />
         <Route path='/testimonial' element={<TestimonialPage />} />
         <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
         <Route path='/data-policy' element={<DataPolicyPage />} />

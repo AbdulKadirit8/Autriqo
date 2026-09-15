@@ -7,11 +7,13 @@ import { getBrand } from "../Redux/ActionCreator/BrandActionCreators";
 import CarCard from "../Component/CarCard";
 
 export default function CarPage() {
+  let [user, setUser] = useState({})
   let dispatch = useDispatch()
   let [data, setData] = useState([])
   let [selected, setSelected] = useState({
     category: [],
-    brand: []
+    brand: [],
+    address: {}
   })
 
   let [sortFilter, setSortFilter] = useState(0)
@@ -38,7 +40,7 @@ export default function CarPage() {
       (selected.category?.length === 0 || selected.category.includes(x.category)) &&
       (selected.brand?.length === 0 || selected.brand.includes(x.brand))
     ))
-    applySortFilter(data, sortFilter)
+    applySortFilter(data, sortFilter, selected)
   }
 
   function applySearchFilter() {
@@ -47,7 +49,7 @@ export default function CarPage() {
       x.category.includes(search) ||
       x.brand.includes(search)
     ))
-    applySortFilter(data, sortFilter)
+    applySortFilter(data, sortFilter, setSelected)
   }
 
   function applySortFilter(data, sortFilter) {
@@ -60,8 +62,40 @@ export default function CarPage() {
     else
       data = data.sort((x, y) => y.discount - x.discount)
 
-    setData(data)
+    // setData(data)
     setSortFilter(sortFilter)
+    applyFinalFilter(data, selected.address)
+  }
+  function applyFinalFilter(data, address) {
+    if (address.lat)
+      setData(data.filter((car) => getDistance(address?.lat, address?.lon, car.address?.lat, car.address?.lon) <= 10))
+    else
+      setData(data)
+  }
+
+  function selectAddress(e) {
+    if (e.target.value !== "-1") {
+      let address = user.address[e.target.value]
+      setSelected({ ...selected, address: address })
+      applyFilter({ ...selected, address: address })
+    }
+  }
+
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Earth radius in KM
+
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
   }
 
   useEffect(() => {
@@ -80,12 +114,36 @@ export default function CarPage() {
   useEffect(() => {
     dispatch(getBrand())
   }, [BrandStateData.length])
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json"
+        }
+      })
+      response = await response.json()
+      setUser({ ...response })
+      // if (response.address && response.address.length)
+      //   setSelected({ ...selected, address: response.address[0] })
+    })()
+  }, [])
   return (
     <>
       <Breadcrum title={"Cars"} />
       <div className="container-fluid my-3">
         <div className="row">
           <div className="col-md-3">
+            <ul className="list-group mb-3">
+              <li className="list-group-item active" aria-current="true">Select Address</li>
+              <select className='form-select my-3' defaultValue={"-1"} onChange={selectAddress}>
+                <option disabled value="-1">Please Select an Address</option>
+                {user?.address?.map((item, index) => {
+                  return <option key={index}>{item.address}</option>
+                })}
+              </select>
+            </ul>
             <ul className="list-group mb-3">
               <li className="list-group-item active" aria-current="true">Category</li>
               {CategoryStateData.filter(x => x.status).map(item => {

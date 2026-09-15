@@ -43,12 +43,26 @@ export default function Address() {
     async function postData(e) {
         e.preventDefault()
         let addressData = user.address ? user.address : []
-        if (option.type === "Create")
-            addressData.push(address)
-        else
-            addressData[option.index] = address
+        let response = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&format=jsonv2&limit=1`)
+        response = await response.json()
 
-        let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
+        if (response.length === 0) {
+            alert("Invalid Address, Please Enter Correct Address")
+            return
+        }
+
+        let item = {
+            address: address,
+            lat: response[0].lat,
+            lon: response[0].lon,
+        }
+
+        if (option.type === "Create")
+            addressData.push(item)
+        else
+            addressData[option.index] = item
+
+        response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
@@ -84,7 +98,7 @@ export default function Address() {
             <div className='mt-5'>
                 {user?.address?.map((item, index) => {
                     return <div className='card p-2' key={index}>
-                        <h5>{item}</h5>
+                        <h5>{item?.address}</h5>
                         <div className="btn-group position-absolute end-0">
                             <button className='btn btn-primary' onClick={() => update(index)}><i className='bi bi-pencil-square'></i></button>
                             <button className='btn btn-danger' onClick={() => deleteRecord(index)}><i className='bi bi-trash'></i></button>

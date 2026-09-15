@@ -1,68 +1,61 @@
 import { useEffect, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import TextValidators from '../../FormValidators/TextValidators'
 
-export default function Address() {
-    let [user, setUser] = useState({})
-    let [address, setAddress] = useState("")
-    let [option, setOption] = useState({
-        type: "Create",
-        showModal: false
+export default function UpdateProfile({ setSearchParams }) {
+    let [data, setData] = useState({
+        name: "",
+        username: "",
+        email: "",
+        phone: "",
     })
-
-    function create() {
-        setOption({
-            type: "Create",
-            showModal: true
-        })
-    }
-
-    function update(index) {
-        setOption({
-            type: "Update",
-            showModal: true,
-            index: index
-        })
-        setAddress(user.address[index])
-    }
-
-    async function deleteRecord(index) {
-        if (window.confirm("Are You Sure You Want To Delete That Record : ")) {
-            user.address.splice(index, 1)
-            setUser({ ...user })
-            let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
-                method: "PUT",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify({ ...user })
-            })
-            response = await response.json()
-        }
+    let [errorMessage, setErrorMessage] = useState({
+        name: "",
+        username: "",
+        email: "",
+        phone: ""
+    })
+    let [show, setShow] = useState(false)
+    function getInputData(e) {
+        let { name, value } = e.target
+        setData({ ...data, [name]: value })
+        setErrorMessage({ ...errorMessage, [name]: TextValidators(e) })
     }
 
     async function postData(e) {
         e.preventDefault()
-        let addressData = user.address ? user.address : []
-        if (option.type === "Create")
-            addressData.push(address)
-        else
-            addressData[option.index] = address
-
-        let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
-            method: "PUT",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({ ...user, address: addressData })
-        })
-        response = await response.json()
-        setUser({ ...user, address: addressData })
-
-        setOption({ ...option, showModal: false })
-        setAddress("")
-        toast("Address Record Has Been Updated");
+        let error = Object.values(errorMessage).find(x => x !== "")
+        if (error)
+            setShow(true)
+        else {
+            let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user`, {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json"
+                }
+            })
+            response = await response.json()
+            let item = response.find(x => x.id !== data.id && (x.username?.toLocaleLowerCase() === data.username?.toLocaleLowerCase() || x.email?.toLocaleLowerCase() === data.email?.toLocaleLowerCase()))
+            if (item) {
+                setErrorMessage({
+                    ...errorMessage,
+                    username: item.username?.toLocaleLowerCase() === data.username?.toLocaleLowerCase() ? "Username Already Taken" : "",
+                    email: item.email?.toLocaleLowerCase() === data.email?.toLocaleLowerCase() ? "Email Address Already Taken" : "",
+                })
+                setShow(true)
+            }
+            else {
+                let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${data.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify({ ...data })
+                })
+                response = await response.json()
+                setSearchParams({ option: "Profile" })
+            }
+        }
     }
-
     useEffect(() => {
         (async () => {
             let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
@@ -72,45 +65,42 @@ export default function Address() {
                 }
             })
             response = await response.json()
-            setUser({ ...response })
+            setData({ ...response })
         })()
     }, [])
     return (
         <>
-            <ToastContainer />
-            <div className='mb-5'>
-                <button className='btn btn-primary float-end' onClick={create}>Add New Address</button>
-            </div>
-            <div className='mt-5'>
-                {user?.address?.map((item, index) => {
-                    return <div className='card p-2' key={index}>
-                        <h5>{item}</h5>
-                        <div className="btn-group position-absolute end-0">
-                            <button className='btn btn-primary' onClick={() => update(index)}><i className='bi bi-pencil-square'></i></button>
-                            <button className='btn btn-danger' onClick={() => deleteRecord(index)}><i className='bi bi-trash'></i></button>
-                        </div>
+            <form onSubmit={postData}>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label>Name*</label>
+                        <input type="text" name="name" value={data.name} onChange={getInputData} placeholder='Full Name' className={`form-control ${show && errorMessage.name ? 'border-danger' : 'border-dark'}`} />
+                        {show && errorMessage.name ? <p className='text-danger'>{errorMessage.name}</p> : null}
                     </div>
-                })}
-            </div>
 
-            <div className={`modal fade ${option.showModal ? 'show d-block' : ''}`}>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">{option.type} Address</h1>
-                            <button type="button" className="btn-close" onClick={() => setOption({ ...option, showModal: false })}></button>
-                        </div>
-                        <form onSubmit={postData}>
-                            <div className="modal-body">
-                                <textarea name="address" required value={address} onChange={(e) => setAddress(e.target.value)} className='form-control border-primary' placeholder='Address...' rows={4}></textarea>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="submit" className="btn btn-primary w-100">{option.type} Address</button>
-                            </div>
-                        </form>
+                    <div className="col-md-6 mb-3">
+                        <label>Phone Number*</label>
+                        <input type="text" name="phone" value={data.phone} onChange={getInputData} placeholder='Phone Number' className={`form-control ${show && errorMessage.phone ? 'border-danger' : 'border-dark'}`} />
+                        {show && errorMessage.phone ? <p className='text-danger'>{errorMessage.phone}</p> : null}
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+                        <label>Username*</label>
+                        <input type="text" name="username" value={data.username} onChange={getInputData} placeholder='Username' className={`form-control ${show && errorMessage.username ? 'border-danger' : 'border-dark'}`} />
+                        {show && errorMessage.username ? <p className='text-danger'>{errorMessage.username}</p> : null}
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+                        <label>Email Address*</label>
+                        <input type="text" name="email" value={data.email} onChange={getInputData} placeholder='Email Address' className={`form-control ${show && errorMessage.email ? 'border-danger' : 'border-dark'}`} />
+                        {show && errorMessage.email ? <p className='text-danger'>{errorMessage.email}</p> : null}
+                    </div>
+
+                    <div className="col-12">
+                        <button type="submit" className='btn btn-primary w-100'>Update Profile</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     )
 }

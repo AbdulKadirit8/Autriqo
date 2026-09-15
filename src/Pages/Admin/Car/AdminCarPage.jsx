@@ -94,7 +94,7 @@ export default function AdminCarPage() {
                     <td>{item.type}</td>
                     <td>{item.drivingMode}</td>
                     <td>{item.driver ? "Yes" : "No"}</td>
-                    <td>{item.city}</td>
+                    <td>{item.address?.add}</td>
                     <td>{item.baseRentAmount}</td>
                     <td>{item.discount}</td>
                     <td>{item.finalRentAmount}</td>

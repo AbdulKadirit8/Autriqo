@@ -81,7 +81,7 @@ export default function AdminUpdateCarPage() {
       let response = await fetch(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=jsonv2&limit=1`)
       response = await response.json()
       if (response.length === 0) {
-        setErrorMessage({ ...errorMessage, address: 'Invalid Address, PLease Enter Correct Address' })
+        setErrorMessage({ ...errorMessage, address: 'Invalid Address, Please Enter Correct Address' })
         setShow(true)
         return
       }
@@ -121,7 +121,7 @@ export default function AdminUpdateCarPage() {
         discount: d,
         finalRentAmount: fs,
         address: {
-          add: data.add,
+          add: data.address,
           lat: response[0].lat,
           lon: response[0].lon
         }
@@ -244,7 +244,7 @@ export default function AdminUpdateCarPage() {
 
               <div className="col-md-6 mb-3">
                 <label className='ps-2'>Address*</label>
-                <input type="text" value={data.address?.address} name="address" placeholder='Address' onChange={getInputData} className={`form-control ${show && errorMessage.address ? 'border-danger' : 'border-dark'}`} />
+                <input type="text" value={data.address?.add} name="address" placeholder='Address' onChange={getInputData} className={`form-control ${show && errorMessage.address ? 'border-danger' : 'border-dark'}`} />
                 {show && errorMessage.address ? <p className='text-danger text-capitalized'>{errorMessage.address}</p> : null}
               </div>
 
@@ -275,7 +275,7 @@ export default function AdminUpdateCarPage() {
               </div>
 
               <div className="col-12 mb-3">
-                <button type='submit' className='btn btn-primary w-100'>{showWaitButton?'Please wait...':'Update'}</button>
+                <button type='submit' className='btn btn-primary w-100'>{showWaitButton ? 'Please wait...' : 'Update'}</button>
               </div>
 
             </div>
